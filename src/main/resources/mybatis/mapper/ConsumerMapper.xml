@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.server.ConsumerMapper">
+    <resultMap id="resultConsumer" type="Consumer">
+        <id property="id" column="id"/>
+        <result property="account" column="account"/>
+        <result property="passwd" column="passwd"/>
+        <result property="role" column="role"/>
+        <result property="realname" column="realname"/>
+        <result property="tel" column="tel"/>
+        <result property="alive" column="alive"/>
+        <result property="organize" column="organize"/>
+        <result property="routes" column="routes"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <resultMap id="resultLogin" type="LoginFrom">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+    </resultMap>
+
+
+    <select id="login" resultMap="resultConsumer">
+        select * from  ${@com.cms.login.LoginController@dbname} where account=#{username} and passwd=#{password};
+    </select>
+
+
+  <select id="getConsumer" parameterType="java.lang.String" resultMap="resultConsumer">
+
+        select * from  ${@com.cms.login.LoginController@dbname}
+         <if test ="_parameter!=null and _parameter!= 0">
+          where organize=#{organize}
+      </if>
+  </select>
+
+
+    <insert id="insert" parameterType="Consumer">
+
+        insert into ${@com.cms.login.LoginController@dbname}
+        (account,passwd,role,realname,tel,alive,organize,routes,create_time,update_time) values
+        (#{account},#{passwd},#{role},#{realname},#{tel},#{alive},#{organize},#{routes},#{createTime},#{updateTime})
+
+  </insert>
+
+
+</mapper>
